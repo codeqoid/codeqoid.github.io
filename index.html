@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+<script>document.documentElement.classList.add("js")</script>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,7 +32,7 @@
       --card: #12152a; --accent-soft: #221d4d; --accent-dark: #b4a6ff;
     }
     h2 { color: #fff !important; }
-    .proj h3, .tl .what, .interest .t, .tag, .contact-card .v { color: #fff !important; }
+    .proj h3, .tl .what, .interest .t, .tag, .contact-card .v, .lang-row b { color: #fff !important; }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -172,10 +173,83 @@
     .proj .side .cat br { display: none; }
     .proj .main { padding: 22px 20px; }
   }
+
+  /* ---------- Animations ---------- */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+  .hero .prompt, .hero h1, .hero .tagline, .hero .chips, .hero .ctas { animation: fadeUp .8s cubic-bezier(.2,.7,.2,1) both; }
+  .hero h1 { animation-delay: .15s; }
+  .hero .tagline { animation-delay: .3s; }
+  .hero .chips { animation-delay: .45s; }
+  .hero .ctas { animation-delay: .6s; }
+  @keyframes floaty { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-30px, 25px); } }
+  .hero::before { animation: floaty 12s ease-in-out infinite; }
+  .hero::after { animation: floaty 9s ease-in-out infinite reverse; }
+
+  .js .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+  .js .reveal.from-left { transform: translateX(-40px); }
+  .js .reveal.from-right { transform: translateX(40px); }
+  .js .reveal.pop { transform: scale(.85); }
+  .js .reveal.in { opacity: 1; transform: none; }
+  .tl::before { transition: transform .4s .3s; }
+  .js .tl.reveal:not(.in)::before { transform: scale(0); }
+  .proj .shot { transition: transform .4s; }
+  .proj:hover .shot { transform: scale(1.03) rotate(-.5deg); }
+
+
+  /* ---------- Constant / interactive effects ---------- */
+  #progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 50; transform-origin: 0 50%; transform: scaleX(0);
+    background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+  #net { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+
+  @keyframes shimmer { to { background-position: 200% center; } }
+  h2 span, .hero h1 .light {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), #ff5d73, var(--accent));
+    background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shimmer 5s linear infinite; }
+  .hero h1 .light { background: linear-gradient(90deg, #c9c6ff, #7ff5e2, #c9c6ff); background-size: 200% auto;
+    -webkit-background-clip: text; background-clip: text; animation: fadeUp .8s .15s cubic-bezier(.2,.7,.2,1) both, shimmer 6s linear infinite; }
+
+  .rotator { color: var(--accent-2); font-weight: 700; border-right: 2px solid var(--accent-2); padding-right: 3px; white-space: nowrap; }
+
+  .marquee { background: var(--ink); border-top: 1px solid rgba(255,255,255,.08); overflow: hidden; padding: 16px 0; position: relative; }
+  .marquee::before, .marquee::after { content: ""; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 1; }
+  .marquee::before { left: 0; background: linear-gradient(90deg, var(--ink), transparent); }
+  .marquee::after { right: 0; background: linear-gradient(-90deg, var(--ink), transparent); }
+  .track { display: flex; width: max-content; animation: scrollX 28s linear infinite; }
+  .marquee:hover .track { animation-play-state: paused; }
+  .track span { font-family: "JetBrains Mono", monospace; font-size: 15px; color: #c9cce0; padding: 0 22px; white-space: nowrap; }
+  .track span::before { content: "◆"; color: var(--accent-2); margin-right: 22px; font-size: 10px; vertical-align: 2px; }
+  @keyframes scrollX { to { transform: translateX(-50%); } }
+
+  .proj { position: relative; transform-style: preserve-3d; will-change: transform; }
+  .proj::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; opacity: 0; transition: opacity .3s;
+    background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.18), transparent 45%); }
+  .proj:hover::after { opacity: 1; }
+  .proj .side .n { animation: glow 3s ease-in-out infinite; }
+  @keyframes glow { 50% { text-shadow: 0 0 18px rgba(255,255,255,.7); } }
+
+  @keyframes bob { 50% { transform: translateY(-6px); } }
+  .interest .ic { display: inline-block; animation: bob 3s ease-in-out infinite; }
+  .interest:nth-child(3) .ic { animation-delay: .4s; }
+  .interest:nth-child(4) .ic { animation-delay: .8s; }
+  .tl.goal::before { animation: pulse 2s ease-out infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0,194,168,.6); } 100% { box-shadow: 0 0 0 14px rgba(0,194,168,0); } }
+  .btn.primary { position: relative; overflow: hidden; }
+  .btn.primary::after { content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; transform: skewX(-20deg);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); animation: sheen 3.5s ease-in-out infinite; }
+  @keyframes sheen { 0%, 60% { left: -60%; } 100% { left: 130%; } }
+  .tag { transition: transform .2s, border-color .2s; }
+  .tag:hover { transform: translateY(-3px) scale(1.06); border-color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .js .reveal { opacity: 1 !important; transform: none !important; }
+  }
 </style>
 </head>
 <body>
 
+<div id="progress"></div>
 <nav>
   <div class="wrap">
     <a class="logo mono" href="#top">~/qoid<span>_</span></a>
@@ -189,10 +263,11 @@
 </nav>
 
 <header class="hero" id="top">
+  <canvas id="net" aria-hidden="true"></canvas>
   <div class="wrap">
-    <div class="prompt mono">~/portfolio $ whoami<span class="cursor"></span></div>
+    <div class="prompt mono">~/portfolio $ <span id="typed" data-text="whoami">whoami</span><span class="cursor"></span></div>
     <h1>Qoid Rafif<br><span class="light">Bin Mohd Fadly</span></h1>
-    <p class="tagline"><b>Computer Science with AI</b> student at the University of Nottingham — game &amp; web developer in the making.</p>
+    <p class="tagline"><b>Computer Science with AI</b> student at the University of Nottingham.<br>A <span class="rotator" id="rotator">game developer</span> in the making.</p>
     <div class="chips">
       <span class="chip"><span class="dot"></span>University of Nottingham</span>
       <span class="chip">Malaysia → China</span>
@@ -206,6 +281,8 @@
     </div>
   </div>
 </header>
+
+<div class="marquee" aria-hidden="true"><div class="track"><span>Java</span><span>JavaScript</span><span>Python</span><span>C</span><span>SQL</span><span>HTML</span><span>CSS</span><span>PHP</span><span>MySQL</span><span>Git</span><span>Gradle</span><span>LWJGL3</span><span>Chart.js</span><span>A* search</span><span>Computer vision</span><span>Jupyter</span><span>Java</span><span>JavaScript</span><span>Python</span><span>C</span><span>SQL</span><span>HTML</span><span>CSS</span><span>PHP</span><span>MySQL</span><span>Git</span><span>Gradle</span><span>LWJGL3</span><span>Chart.js</span><span>A* search</span><span>Computer vision</span><span>Jupyter</span></div></div>
 
 <section id="about">
   <div class="wrap about-grid">
@@ -385,5 +462,121 @@
   </div>
 </footer>
 
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Typing effect on the terminal prompt
+  var t = document.getElementById('typed');
+  if (t && !reduce) {
+    var word = t.dataset.text, i = 0; t.textContent = '';
+    setTimeout(function type() { t.textContent = word.slice(0, ++i); if (i < word.length) setTimeout(type, 110); }, 500);
+  }
+
+  // Mark elements to animate on scroll
+  function mark(sel, cls, step) {
+    document.querySelectorAll(sel).forEach(function (el, n) {
+      el.classList.add('reveal'); if (cls) el.classList.add(cls);
+      if (step) el.style.setProperty('--d', (n * step) + 's');
+    });
+  }
+  mark('section .eyebrow'); mark('section h2');
+  mark('.about p', null, .12);
+  mark('.interest', 'from-right', .12);
+  mark('.skill-box', null, .12);
+  mark('.tag', 'pop', .03);
+  mark('.tl', 'from-left', .15);
+  mark('.lang-row', 'from-right', .12);
+  mark('.proj');
+  mark('.contact-card', null, .1);
+
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { e.target.classList.toggle('in', e.isIntersecting); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // Scroll progress bar
+  var bar = document.getElementById('progress');
+  function onScroll() {
+    var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? h.scrollTop / max : 0) + ')';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  if (reduce) return;
+
+  // Rotating role text (type + delete)
+  var rot = document.getElementById('rotator');
+  var roles = ['game developer', 'web developer', 'AI explorer', 'problem solver'];
+  var r = 0, c = roles[0].length, del = true;
+  setTimeout(function tick() {
+    var word = roles[r];
+    if (del) { c--; if (c === 0) { del = false; r = (r + 1) % roles.length; } }
+    else { c++; if (c === roles[r].length) { del = true; rot.textContent = roles[r]; return setTimeout(tick, 1800); } }
+    rot.textContent = roles[r].slice(0, c) || '\u200b';
+    setTimeout(tick, del ? 45 : 90);
+  }, 2600);
+
+  // Particle network in hero
+  var cv = document.getElementById('net'), ctx = cv.getContext('2d'), hero = cv.parentElement;
+  var pts = [], W, H, dpr, mouse = { x: -999, y: -999 }, running = true;
+  function size() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = hero.clientWidth; H = hero.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var n = Math.round(Math.min(90, W * H / 11000));
+    pts = [];
+    for (var i = 0; i < n; i++) pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .45, vy: (Math.random() - .5) * .45, r: Math.random() * 1.6 + .8 });
+  }
+  size(); window.addEventListener('resize', size);
+  hero.addEventListener('mousemove', function (e) { var b = hero.getBoundingClientRect(); mouse.x = e.clientX - b.left; mouse.y = e.clientY - b.top; });
+  hero.addEventListener('mouseleave', function () { mouse.x = mouse.y = -999; });
+  new IntersectionObserver(function (e) { running = e[0].isIntersecting; if (running) requestAnimationFrame(draw); }).observe(hero);
+  function draw() {
+    if (!running || document.hidden) return;
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      var dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.sqrt(dx * dx + dy * dy);
+      if (d < 140 && d > 0) { p.x += dx / d * 1.2; p.y += dy / d * 1.2; }
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fillStyle = 'rgba(180,170,255,.8)'; ctx.fill();
+      for (var j = i + 1; j < pts.length; j++) {
+        var q = pts[j], ex = p.x - q.x, ey = p.y - q.y, e = ex * ex + ey * ey;
+        if (e < 15000) { ctx.strokeStyle = 'rgba(140,125,255,' + (1 - e / 15000) * .35 + ')'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+      }
+      if (d < 180) { ctx.strokeStyle = 'rgba(0,194,168,' + (1 - d / 180) * .8 + ')'; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); }
+    }
+    requestAnimationFrame(draw);
+  }
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && running) requestAnimationFrame(draw); });
+  requestAnimationFrame(draw);
+
+  // 3D tilt + glare on project cards (mouse only)
+  if (fine) document.querySelectorAll('.proj').forEach(function (card) {
+    card.addEventListener('mousemove', function (e) {
+      var b = card.getBoundingClientRect(), x = (e.clientX - b.left) / b.width, y = (e.clientY - b.top) / b.height;
+      card.style.transition = 'transform .1s, box-shadow .2s';
+      card.style.transform = 'perspective(1100px) rotateX(' + ((.5 - y) * 6) + 'deg) rotateY(' + ((x - .5) * 8) + 'deg) translateY(-4px)';
+      card.style.setProperty('--mx', (x * 100) + '%'); card.style.setProperty('--my', (y * 100) + '%');
+    });
+    card.addEventListener('mouseleave', function () { card.style.transition = 'transform .5s, box-shadow .2s'; card.style.transform = ''; });
+  });
+})();
+</script>
 </body>
 </html>
