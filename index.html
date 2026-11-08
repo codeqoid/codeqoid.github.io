@@ -116,11 +116,11 @@
 
   /* Projects */
   .projects { display: grid; gap: 28px; }
-  .proj { display: grid; grid-template-columns: 110px 1fr; background: var(--card); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; transition: transform .2s, box-shadow .2s; }
+  .proj { display: grid; grid-template-columns: 132px 1fr; background: var(--card); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; transition: transform .2s, box-shadow .2s; }
   .proj:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(15,18,34,.12); }
-  .proj .side { color: #fff; padding: 24px 18px; display: flex; flex-direction: column; justify-content: space-between; }
+  .proj .side { color: #fff; padding: 24px 16px; display: flex; flex-direction: column; justify-content: space-between; }
   .proj .side .n { font-family: "JetBrains Mono", monospace; font-size: 36px; font-weight: 700; line-height: 1; }
-  .proj .side .cat { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; line-height: 1.4; opacity: .92; }
+  .proj .side .cat { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; line-height: 1.4; opacity: .92; overflow-wrap: anywhere; }
   .s1 { background: linear-gradient(160deg, #ff5d73, #d6334b); }
   .s2 { background: linear-gradient(160deg, #00c2a8, #00897a); }
   .s3 { background: linear-gradient(160deg, #5b3df5, #3a20c9); }
@@ -361,7 +361,7 @@
     <div class="projects">
 
       <article class="proj">
-        <div class="side s1"><div class="n">01</div><div class="cat">Game<br>development</div></div>
+        <div class="side s1"><div class="n">01</div><div class="cat">Game <br>development</div></div>
         <div class="main">
           <div>
             <h3>Notts-Out Fighter</h3>
@@ -382,7 +382,7 @@
       </article>
 
       <article class="proj">
-        <div class="side s2"><div class="n">02</div><div class="cat">Full-stack<br>web app</div></div>
+        <div class="side s2"><div class="n">02</div><div class="cat">Full-stack <br>web app</div></div>
         <div class="main">
           <div>
             <h3>Internship Result Management System</h3>
@@ -404,7 +404,7 @@
       </article>
 
       <article class="proj">
-        <div class="side s3"><div class="n">03</div><div class="cat">AI &amp;<br>computer vision</div></div>
+        <div class="side s3"><div class="n">03</div><div class="cat">AI &amp; <br>computer vision</div></div>
         <div class="main noimg">
           <div>
             <h3>A4 Document Corner Detection with A* Search</h3>
@@ -426,7 +426,7 @@
       </article>
 
       <article class="proj">
-        <div class="side s4"><div class="n">04</div><div class="cat">Systems<br>programming</div></div>
+        <div class="side s4"><div class="n">04</div><div class="cat">Systems <br>programming</div></div>
         <div class="main noimg">
           <div>
             <h3>Toxic Text Analyser</h3>
